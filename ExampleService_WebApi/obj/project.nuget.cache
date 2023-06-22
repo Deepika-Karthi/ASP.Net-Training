@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "PU3F3x15XYlBXWG8oUosRUThQFHWTZbveJK6gNxpoeVrvjK+hY7u7+Soo/A1mnLGcFb2g5rHCj3xJfuy+BtrTg==",
+  "success": true,
+  "projectFilePath": "C:\\ICM Enterprise\\Templates\\ExampleService\\ExampleService_WebApi\\ExampleService_WebApi.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\jayabal.s\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.5\\microsoft.aspnetcore.openapi.7.0.5.nupkg.sha512",
+    "C:\\Users\\jayabal.s\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "C:\\Users\\jayabal.s\\.nuget\\packages\\microsoft.openapi\\1.4.3\\microsoft.openapi.1.4.3.nupkg.sha512",
+    "C:\\Users\\jayabal.s\\.nuget\\packages\\swashbuckle.aspnetcore\\6.4.0\\swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
+    "C:\\Users\\jayabal.s\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.4.0\\swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
+    "C:\\Users\\jayabal.s\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.4.0\\swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",
+    "C:\\Users\\jayabal.s\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.4.0\\swashbuckle.aspnetcore.swaggerui.6.4.0.nupkg.sha512"
+  ],
+  "logs": []
+}
