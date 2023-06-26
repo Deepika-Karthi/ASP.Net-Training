@@ -2,23 +2,34 @@ using Microsoft.VisualBasic;
 
 namespace ExampleService_WebApi;
 
-public class InMemoryDataProvider : InterfaceClass
+public class InMemoryDataProvider : IDataProvider
 {
     
-    //creating inmemory data
-    public List<TaskModel> tasks = new List<TaskModel>(){
+    /// <summary>
+    /// adding some inmemory data
+    /// </summary>
+
+    public List<TaskModel> tasks = new(){
         new TaskModel{TaskName = "Clone Repo", TaskDescription="Create a repo and clone it", TaskStatus="Completed",},
-         new TaskModel{TaskName = "Commit your works", TaskDescription="Create a branch and commit your works in it", TaskStatus="Active",},
-          new TaskModel{TaskName = "Raise PR", TaskDescription="Create a Pull request for merging it with main branch", TaskStatus="Not Started",}
+        new TaskModel{TaskName = "Commit your works", TaskDescription="Create a branch and commit your works in it", TaskStatus="Active",},
+        new TaskModel{TaskName = "Raise PR", TaskDescription="Create a Pull request for merging it with main branch", TaskStatus="Not Started",}
     };
 
-    //to add a new task in data
+   /// <summary>
+   ///adding new task
+   /// </summary>
+   /// <param name="task">Task model to be added</param>
+
     public void AddNewTask(TaskModel task)
     {
         tasks.Add(task);
     }
 
-    //to return all the task which already avail in data
+    /// <summary>
+    /// to return list of task available
+    /// </summary>
+    /// <returns>Task available in memmory</returns>
+    
     public List<TaskModel> ListofTask()
     {       
        return tasks;

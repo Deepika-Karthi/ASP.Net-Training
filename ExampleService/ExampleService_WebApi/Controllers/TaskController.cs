@@ -6,46 +6,49 @@ namespace ExampleService_WebApi;
 [Route("[controller]")]
 public class TaskController :  ControllerBase
 {   
-    private readonly InterfaceClass _interface;
-
-    //injecting the interface dependency
-    public TaskController(InterfaceClass interfaceClass)
+    private readonly ITaskInterface _interface;
+    public TaskController(ITaskInterface interfaceClass)
     {
         _interface= interfaceClass;
     }
-
-    //to return the list of task
+    
+    /// <summary>
+    /// to get the list of task
+    /// </summary>
+    /// <returns>List of task avail in memory</returns>
     [HttpGet("List of your Task")]
     public IActionResult Get()
     {   
         var taskList = _interface.ListofTask();
-
-        //mapping as DTO
-        List<TaskDTO> taskMapping = new List<TaskDTO>();        
-
+        
+        List<TaskDTO> outputTaskDTO = new List<TaskDTO>();    
         foreach(var tasks in taskList)
         {
             var temp = new TaskDTO();
             temp.TaskDescription = tasks.TaskDescription;
             temp.TaskName = tasks.TaskName;
             temp.TaskStatus = tasks.TaskStatus;
-            taskMapping.Add(temp);  
+            outputTaskDTO.Add(temp);  
         } 
     
-        return Ok(taskMapping);
+        return Ok(outputTaskDTO);
     }
 
-    //to add a new task 
+   /// <summary>
+   /// To add a new task
+   /// </summary>
+   /// <param name="task">Ojects to be added</param>
+   /// <returns>Success message of adding task</returns>
     [HttpPost("Create your Task here")]
-    public IActionResult Post([FromBody] TaskDTO task)
-    {   
-        //creating a inline mapping
-        var taskMapping = new TaskModel();
-        taskMapping.TaskStatus = task.TaskStatus;
-            taskMapping.TaskName = task.TaskName;
-                taskMapping.TaskDescription = task.TaskDescription;
+    public IActionResult Post([FromBody] TaskDTO taskRequest)
+    {         
+        var taskModel = new TaskModel();
 
-        _interface.AddNewTask(taskMapping);
+        taskModel.TaskStatus = taskRequest.TaskStatus;
+        taskModel.TaskName = taskRequest.TaskName;
+        taskModel.TaskDescription = taskRequest.TaskDescription;
+
+        _interface.AddNewTask(taskModel);
                 
         return Ok("Task added successfully");
     }
