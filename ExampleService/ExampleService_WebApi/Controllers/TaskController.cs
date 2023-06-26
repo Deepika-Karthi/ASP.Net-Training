@@ -7,21 +7,39 @@ namespace ExampleService_WebApi;
 public class TaskController :  ControllerBase
 {   
     private readonly InterfaceClass _interface;
+
+    //injecting the interface dependency
     public TaskController(InterfaceClass interfaceClass)
     {
         _interface= interfaceClass;
     }
 
+    //to return the list of task
     [HttpGet("List of your Task")]
     public IActionResult Get()
     {   
-        var TaskList = _interface.ListofTask();
-        return Ok(TaskList);
+        var taskList = _interface.ListofTask();
+
+        //mapping as DTO
+        List<TaskDTO> taskMapping = new List<TaskDTO>();        
+
+        foreach(var tasks in taskList)
+        {
+            var temp = new TaskDTO();
+            temp.TaskDescription = tasks.TaskDescription;
+            temp.TaskName = tasks.TaskName;
+            temp.TaskStatus = tasks.TaskStatus;
+            taskMapping.Add(temp);  
+        } 
+    
+        return Ok(taskMapping);
     }
 
+    //to add a new task 
     [HttpPost("Create your Task here")]
     public IActionResult Post([FromBody] TaskDTO task)
-    {
+    {   
+        //creating a inline mapping
         var taskMapping = new TaskModel();
         taskMapping.TaskStatus = task.TaskStatus;
             taskMapping.TaskName = task.TaskName;
@@ -29,7 +47,7 @@ public class TaskController :  ControllerBase
 
         _interface.AddNewTask(taskMapping);
                 
-        return Ok();
+        return Ok("Task added successfully");
     }
 
 }
