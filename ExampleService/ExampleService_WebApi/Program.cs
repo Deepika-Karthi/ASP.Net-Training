@@ -10,7 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //registering the depenedency injection
-builder.Services.AddSingleton<InterfaceClass,InMemoryDataProvider>();
+builder.Services.AddSingleton<ITaskInterface, InMemoryDataProvider>();
 
 var app = builder.Build();
 
