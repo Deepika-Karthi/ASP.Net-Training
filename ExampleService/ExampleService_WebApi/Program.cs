@@ -1,4 +1,5 @@
 using ExampleService_WebApi;
+using ExampleService_WebApi.CustomFilters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,7 @@ builder.Services.AddSwaggerGen();
 
 //registering the depenedency injection
 builder.Services.AddSingleton<ITaskInterface, InMemoryDataProvider>();
+builder.Services.AddSingleton<PostAPIRequestValidation>();
 
 var app = builder.Build();
 

@@ -1,4 +1,5 @@
 ﻿using ExampleService_WebApi;
+using ExampleService_WebApi.CustomFilters;
 using Moq;
 
 
@@ -12,7 +13,7 @@ namespace Todo.UnitTesting.ClassFixture
     {
         #region PROPERTIES
         public Mock<ITaskInterface> interfaceClassWithData { get; }
-        public Mock<ITaskInterface> interfaceClassWithoutData { get; }
+        public Mock<ITaskInterface> interfaceClassWithoutData { get; } 
 
         #endregion
 
@@ -34,7 +35,6 @@ namespace Todo.UnitTesting.ClassFixture
             interfaceClassWithoutData
                 .Setup(m => m.ListofTask())
                 .Returns(new List<TaskModel>());
-
         }
 
         #endregion

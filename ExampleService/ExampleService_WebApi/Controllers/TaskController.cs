@@ -1,3 +1,5 @@
+
+using ExampleService_WebApi.CustomFilters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExampleService_WebApi;
@@ -8,13 +10,15 @@ public class TaskController :  ControllerBase
 {
     #region PROPERTIES
     private readonly ITaskInterface _interface;
+    private readonly PostAPIRequestValidation _validationRequest;
 
     #endregion
 
     #region CONSTRUCTOR
-    public TaskController(ITaskInterface interfaceClass)
+    public TaskController(ITaskInterface interfaceClass, PostAPIRequestValidation requestValidation )
     {
         _interface= interfaceClass;
+        _validationRequest= requestValidation;
     }
 
     #endregion
@@ -59,11 +63,14 @@ public class TaskController :  ControllerBase
 
     [HttpPost("Create your Task here")]
     public IActionResult Post([FromBody] TaskDTO taskRequest)
-    {     
-        if(taskRequest == null)
+    {
+        string ValidationResult = _validationRequest.ValidationLogic(taskRequest);
+
+        if(ValidationResult != "ValidState")
         {
-            return BadRequest("Provide Data to be added");
+            return BadRequest(ValidationResult);
         }
+
         var taskModel = new TaskModel();
 
         taskModel.TaskStatus = taskRequest.TaskStatus;
@@ -71,8 +78,8 @@ public class TaskController :  ControllerBase
         taskModel.TaskDescription = taskRequest.TaskDescription;
 
         _interface.AddNewTask(taskModel);
-                
-        return Ok("Task added successfully");
+
+        return Ok("Task added successfully");       
     }
 
     #endregion
