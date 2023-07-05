@@ -34,24 +34,31 @@ public class TaskController : ControllerBase
     [HttpGet("List of your Task")]
     public IActionResult Get()
     {
-        List<TaskModel> taskList = _interface.ListofTask();
-
-        if (taskList == null || taskList.ToList().Count == 0)
+        try
         {
-            return NotFound("No Task Found");
-        }
+            List<TaskModel> taskList = _interface.ListofTask();
 
-        List<TaskDTO> outputTaskDTO = new List<TaskDTO>();
-        foreach (var tasks in taskList)
+            if (taskList == null || taskList.ToList().Count == 0)
+            {
+                return NotFound("No Task Found");
+            }
+
+            List<TaskDTO> outputTaskDTO = new List<TaskDTO>();
+            foreach (var tasks in taskList)
+            {
+                var temp = new TaskDTO();
+                temp.TaskDescription = tasks.TaskDescription;
+                temp.TaskName = tasks.TaskName;
+                temp.TaskStatus = tasks.TaskStatus;
+                outputTaskDTO.Add(temp);
+            }
+
+            return Ok(outputTaskDTO);
+        }
+        catch(Exception ex) 
         {
-            var temp = new TaskDTO();
-            temp.TaskDescription = tasks.TaskDescription;
-            temp.TaskName = tasks.TaskName;
-            temp.TaskStatus = tasks.TaskStatus;
-            outputTaskDTO.Add(temp);
+            return BadRequest(ex.Message);
         }
-
-        return Ok(outputTaskDTO);
     }
 
     /// <summary>
@@ -64,22 +71,29 @@ public class TaskController : ControllerBase
     [HttpPost("Create your Task here")]
     public IActionResult Post([FromBody] TaskDTO taskRequest)
     {
-        string validationResult = _validationRequest.ValidationLogic(taskRequest);
-
-        if (validationResult != "ValidState")
+        try
         {
-            return BadRequest(validationResult);
+            string validationResult = _validationRequest.ValidationLogic(taskRequest);
+
+            if (validationResult != "ValidState")
+            {
+                return BadRequest(validationResult);
+            }
+
+            var taskModel = new TaskModel();
+
+            taskModel.TaskStatus = taskRequest.TaskStatus;
+            taskModel.TaskName = taskRequest.TaskName;
+            taskModel.TaskDescription = taskRequest.TaskDescription;
+
+            _interface.AddNewTask(taskModel);
+
+            return Ok("Task added successfully");
         }
-
-        var taskModel = new TaskModel();
-
-        taskModel.TaskStatus = taskRequest.TaskStatus;
-        taskModel.TaskName = taskRequest.TaskName;
-        taskModel.TaskDescription = taskRequest.TaskDescription;
-
-        _interface.AddNewTask(taskModel);
-
-        return Ok("Task added successfully");
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
     #endregion
