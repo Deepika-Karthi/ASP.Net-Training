@@ -1,8 +1,6 @@
-﻿
-
-namespace ExampleService_WebApi.CustomFilters
+﻿namespace ExampleService_WebApi.Ports.CustomFilters
 {
-    public class PostAPIRequestValidation
+    public class RequestFromBodyValidation
     {
         /// <summary>
         /// for validating the model state of request
@@ -23,7 +21,7 @@ namespace ExampleService_WebApi.CustomFilters
                 return "Provide Data to be added";
             }
 
-            if (requestDTO.TaskDescription.Trim()=="" || requestDTO.TaskName.Trim() == "")
+            if (requestDTO.TaskDescription.Trim() == "" || requestDTO.TaskName.Trim() == "")
             {
                 return "Provide Data to be added";
             }
@@ -34,7 +32,7 @@ namespace ExampleService_WebApi.CustomFilters
                 return "Task Status should be given as (Started/Completed/NotStarted)";
             }
 
-           
+
             //if all the cases are failed then the state is valid
             return "ValidState";
         }

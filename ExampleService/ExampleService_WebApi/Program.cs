@@ -1,5 +1,5 @@
-using ExampleService_WebApi;
-using ExampleService_WebApi.CustomFilters;
+using ExampleService_WebApi.Adapters.DataProviders;
+using ExampleService_WebApi.Ports.CustomFilters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +12,7 @@ builder.Services.AddSwaggerGen();
 
 //registering the depenedency injection
 builder.Services.AddSingleton<ITaskInterface, InMemoryDataProvider>();
-builder.Services.AddSingleton<PostAPIRequestValidation>();
+builder.Services.AddSingleton<RequestFromBodyValidation>();
 
 var app = builder.Build();
 

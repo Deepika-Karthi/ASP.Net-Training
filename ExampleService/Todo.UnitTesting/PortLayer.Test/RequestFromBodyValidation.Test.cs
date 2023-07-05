@@ -1,14 +1,14 @@
 ﻿using ExampleService_WebApi;
-using ExampleService_WebApi.CustomFilters;
+using ExampleService_WebApi.Ports.CustomFilters;
 
 namespace Todo.UnitTesting.ServiceLayer
 {
-    public class RequestValidationPostAPI
+    public class RequestFromBodyValidationTest
     {
 
         #region PROPERTIES
 
-        PostAPIRequestValidation requestValidation = new PostAPIRequestValidation();
+        RequestFromBodyValidation requestValidation = new RequestFromBodyValidation();
 
         #endregion
 
@@ -17,7 +17,7 @@ namespace Todo.UnitTesting.ServiceLayer
         {
             return new List<object[]>
             {
-               //new object[] {new  TaskDTO { TaskDescription = "asdf", TaskName = "Check Post API", TaskStatus = "asdf" } },
+               
                 new object[] {new  TaskDTO { TaskDescription = "", TaskName = "Check Post API", TaskStatus = "started" } },
                 new object[] {new  TaskDTO { TaskDescription = "  ", TaskName = "Check Post API", TaskStatus = "not started" } },
                 new object[] {null}
@@ -38,10 +38,11 @@ namespace Todo.UnitTesting.ServiceLayer
 
         public void ValidationLogic_TestRequestInputWithNullorSpace_ReturnErrorValidationStatus(TaskDTO requestData)
         {
+            string expectedResponse = "Provide Data to be added";
 
             var result = requestValidation.ValidationLogic(requestData);
             
-            Assert.Equal("Provide Data to be added", result);
+            Assert.Equal(expectedResponse, result);
 
         }
 
@@ -53,10 +54,11 @@ namespace Todo.UnitTesting.ServiceLayer
         public void ValidationLogic_TestRequestInputforTaskStatus_ReturnErrorValidationStatus()
         {
             TaskDTO taskDTO = new TaskDTO() { TaskDescription = "brief description about task", TaskName = "name of the task", TaskStatus = "sdfgh" };
+            string expectedResponse = "Task Status should be given as (Started/Completed/NotStarted)";
 
             var result = requestValidation.ValidationLogic(taskDTO);
 
-            Assert.Equal("Task Status should be given as (Started/Completed/NotStarted)", result);
+            Assert.Equal(expectedResponse, result);
         }
 
         /// <summary>
@@ -67,10 +69,11 @@ namespace Todo.UnitTesting.ServiceLayer
         public void ValidationLogic_TestRequestInput_ReturnAsValid()
         {
             TaskDTO taskDTO = new TaskDTO() { TaskDescription = "brief description about task", TaskName = "name of the task", TaskStatus = "started" };
+            string expectedResponse = "ValidState";
 
             var result = requestValidation.ValidationLogic(taskDTO);
 
-            Assert.Equal("ValidState", result);
+            Assert.Equal(expectedResponse, result);
         }
 
         #endregion

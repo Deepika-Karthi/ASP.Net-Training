@@ -1,7 +1,9 @@
 using ExampleService_WebApi;
-using ExampleService_WebApi.CustomFilters;
+using ExampleService_WebApi.CoreLayer.Controllers;
+using ExampleService_WebApi.Ports.CustomFilters;
 using Microsoft.AspNetCore.Mvc;
 using Todo.UnitTesting.ClassFixture;
+using Todo.UnitTesting.ServiceLayer;
 
 namespace Todo.UnitTesting.TestForControllers
 {
@@ -13,8 +15,8 @@ namespace Todo.UnitTesting.TestForControllers
         private readonly TaskInterfaceMock _fixture;
 
         TaskDTO DummyDataForPostAPI = new TaskDTO { TaskDescription = "Checking for post test", TaskName = "Check Post API", TaskStatus = "Started" };
-         static TaskDTO DummyDataForPostAPIwithNUll = new TaskDTO { TaskDescription = null, TaskName = "Check Post API", TaskStatus = "Started" };
-        PostAPIRequestValidation APIRequestValidation = new PostAPIRequestValidation();
+       
+        RequestFromBodyValidation APIRequestValidation = new RequestFromBodyValidation();
 
         #endregion
 

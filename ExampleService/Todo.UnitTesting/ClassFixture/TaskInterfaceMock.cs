@@ -1,5 +1,5 @@
 ﻿using ExampleService_WebApi;
-using ExampleService_WebApi.CustomFilters;
+using ExampleService_WebApi.Adapters.DataProviders;
 using Moq;
 
 

@@ -1,4 +1,4 @@
-namespace ExampleService_WebApi
+namespace ExampleService_WebApi.Adapters.DataProviders
 {
 
     public class InMemoryDataProvider : ITaskInterface
