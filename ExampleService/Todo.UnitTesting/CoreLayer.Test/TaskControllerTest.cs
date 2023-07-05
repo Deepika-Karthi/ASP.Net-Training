@@ -1,9 +1,8 @@
 using ExampleService_WebApi;
 using ExampleService_WebApi.CoreLayer.Controllers;
-using ExampleService_WebApi.Ports.CustomFilters;
+using ExampleService_WebApi.CoreLayer.CustomFilters;
 using Microsoft.AspNetCore.Mvc;
 using Todo.UnitTesting.ClassFixture;
-using Todo.UnitTesting.ServiceLayer;
 
 namespace Todo.UnitTesting.TestForControllers
 {
@@ -14,9 +13,9 @@ namespace Todo.UnitTesting.TestForControllers
 
         private readonly TaskInterfaceMock _fixture;
 
-        TaskDTO DummyDataForPostAPI = new TaskDTO { TaskDescription = "Checking for post test", TaskName = "Check Post API", TaskStatus = "Started" };
+        private TaskDTO _dummyDataForPostAPI = new TaskDTO { TaskDescription = "Checking for post test", TaskName = "Check Post API", TaskStatus = "Started" };
        
-        RequestFromBodyValidation APIRequestValidation = new RequestFromBodyValidation();
+        RequestFromBodyValidation API_requestValidation = new RequestFromBodyValidation();
 
         #endregion
 
@@ -51,12 +50,9 @@ namespace Todo.UnitTesting.TestForControllers
         [Fact]
         public void Get_WhenDataFound_ReturnOkResponse()
         {
-
-            var taskController = new TaskController(_fixture.interfaceClassWithData.Object,APIRequestValidation);
-
+            var taskController = new TaskController(_fixture.interfaceClassWithData.Object,API_requestValidation);
 
             var result = taskController.Get();
-
 
             Assert.IsType<OkObjectResult>(result);
 
@@ -69,12 +65,9 @@ namespace Todo.UnitTesting.TestForControllers
         [Fact]
         public void Get_WhenDataNotFound_ReturnNotFoundResponse()
         {
-
-            var taskController = new TaskController(_fixture.interfaceClassWithoutData.Object, APIRequestValidation);
-
+            var taskController = new TaskController(_fixture.interfaceClassWithoutData.Object, API_requestValidation);
 
             var result = taskController.Get();
-
 
             Assert.IsType<NotFoundObjectResult>(result);
 
@@ -87,15 +80,11 @@ namespace Todo.UnitTesting.TestForControllers
         [Fact]
         public void Post_WhenDataIsGiven_NeedToAdd()
         {
+            var taskController = new TaskController(_fixture.interfaceClassWithData.Object, API_requestValidation);
 
-
-            var taskController = new TaskController(_fixture.interfaceClassWithData.Object, APIRequestValidation);
-
-            var result = taskController.Post(DummyDataForPostAPI);
-
+            var result = taskController.Post(_dummyDataForPostAPI);
 
             Assert.IsType<OkObjectResult>(result);
-
         }
 
         /// <summary>
@@ -106,16 +95,11 @@ namespace Todo.UnitTesting.TestForControllers
         [MemberData(nameof(TestDataForPostAPI))]
         public void Post_WhenNullDataIsGiven_NeedToThrowBadResponse(TaskDTO taskDTO)
         {
-
-
-            var taskController = new TaskController(_fixture.interfaceClassWithData.Object,APIRequestValidation);
-
+            var taskController = new TaskController(_fixture.interfaceClassWithData.Object,API_requestValidation);
            
             var result = taskController.Post(taskDTO);
 
-
             Assert.IsType<BadRequestObjectResult>(result);
-
         }
 
         #endregion

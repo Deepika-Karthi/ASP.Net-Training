@@ -1,5 +1,5 @@
 ﻿using ExampleService_WebApi;
-using ExampleService_WebApi.Ports.CustomFilters;
+using ExampleService_WebApi.CoreLayer.CustomFilters;
 
 namespace Todo.UnitTesting.ServiceLayer
 {
@@ -8,7 +8,7 @@ namespace Todo.UnitTesting.ServiceLayer
 
         #region PROPERTIES
 
-        RequestFromBodyValidation requestValidation = new RequestFromBodyValidation();
+        private RequestFromBodyValidation _requestValidation = new RequestFromBodyValidation();
 
         #endregion
 
@@ -40,7 +40,7 @@ namespace Todo.UnitTesting.ServiceLayer
         {
             string expectedResponse = "Provide Data to be added";
 
-            var result = requestValidation.ValidationLogic(requestData);
+            var result = _requestValidation.ValidationLogic(requestData);
             
             Assert.Equal(expectedResponse, result);
 
@@ -56,7 +56,7 @@ namespace Todo.UnitTesting.ServiceLayer
             TaskDTO taskDTO = new TaskDTO() { TaskDescription = "brief description about task", TaskName = "name of the task", TaskStatus = "sdfgh" };
             string expectedResponse = "Task Status should be given as (Started/Completed/NotStarted)";
 
-            var result = requestValidation.ValidationLogic(taskDTO);
+            var result = _requestValidation.ValidationLogic(taskDTO);
 
             Assert.Equal(expectedResponse, result);
         }
@@ -71,7 +71,7 @@ namespace Todo.UnitTesting.ServiceLayer
             TaskDTO taskDTO = new TaskDTO() { TaskDescription = "brief description about task", TaskName = "name of the task", TaskStatus = "started" };
             string expectedResponse = "ValidState";
 
-            var result = requestValidation.ValidationLogic(taskDTO);
+            var result = _requestValidation.ValidationLogic(taskDTO);
 
             Assert.Equal(expectedResponse, result);
         }

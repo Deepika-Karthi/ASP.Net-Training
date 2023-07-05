@@ -1,5 +1,5 @@
-using ExampleService_WebApi.Adapters.DataProviders;
-using ExampleService_WebApi.Ports.CustomFilters;
+using ExampleService_WebApi.CoreLayer.CustomFilters;
+using ExampleService_WebApi.PortLayer.InterfaceClass;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExampleService_WebApi.CoreLayer.Controllers;
@@ -15,10 +15,10 @@ public class TaskController : ControllerBase
     #endregion
 
     #region CONSTRUCTOR
-    public TaskController(ITaskInterface interfaceClass, RequestFromBodyValidation requestValidation)
+    public TaskController(ITaskInterface interfaceClass, RequestFromBodyValidation _requestValidation)
     {
         _interface = interfaceClass;
-        _validationRequest = requestValidation;
+        _validationRequest = _requestValidation;
     }
 
     #endregion
@@ -64,11 +64,11 @@ public class TaskController : ControllerBase
     [HttpPost("Create your Task here")]
     public IActionResult Post([FromBody] TaskDTO taskRequest)
     {
-        string ValidationResult = _validationRequest.ValidationLogic(taskRequest);
+        string validationResult = _validationRequest.ValidationLogic(taskRequest);
 
-        if (ValidationResult != "ValidState")
+        if (validationResult != "ValidState")
         {
-            return BadRequest(ValidationResult);
+            return BadRequest(validationResult);
         }
 
         var taskModel = new TaskModel();

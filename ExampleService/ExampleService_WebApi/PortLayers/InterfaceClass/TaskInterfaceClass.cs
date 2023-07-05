@@ -1,4 +1,4 @@
-namespace ExampleService_WebApi.Adapters.DataProviders;
+namespace ExampleService_WebApi.PortLayer.InterfaceClass;
 
 /// <summary>
 /// Interface class for loose coupling

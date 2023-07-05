@@ -1,5 +1,6 @@
 using ExampleService_WebApi.Adapters.DataProviders;
-using ExampleService_WebApi.Ports.CustomFilters;
+using ExampleService_WebApi.CoreLayer.CustomFilters;
+using ExampleService_WebApi.PortLayer.InterfaceClass;
 
 var builder = WebApplication.CreateBuilder(args);
 
