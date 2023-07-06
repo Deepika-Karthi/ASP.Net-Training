@@ -1,4 +1,6 @@
-using ExampleService_WebApi;
+using Todo_TaskService.Adapters.DataProviders;
+using Todo_TaskService.CoreLayer.CustomFilters;
+using Todo.TaskService.Core.Ports;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +12,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //registering the depenedency injection
-builder.Services.AddSingleton<InterfaceClass,InMemoryDataProvider>();
+builder.Services.AddSingleton<ITaskService, InMemoryDataProvider>();
+builder.Services.AddSingleton<TaskModelValidation>();
 
 var app = builder.Build();
 

@@ -1,10 +1,12 @@
-namespace ExampleService_WebApi;
+using Todo.TaskService.Core.Models;
+
+namespace Todo.TaskService.Core.Ports;
 
 /// <summary>
 /// Interface class for loose coupling
 /// </summary>
 
-public interface ITaskInterface
+public interface ITaskService
 {
 
     /// <summary>
